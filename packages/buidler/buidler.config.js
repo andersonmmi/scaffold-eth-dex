@@ -92,7 +92,7 @@ async function addr(addr) {
 }
 
 module.exports = {
-  defaultNetwork: 'localhost',
+  defaultNetwork: 'teams',
   networks: {
     localhost: {
       //url: 'https://rinkeby.infura.io/v3/2717afb6bf164045b5d5468031b93f87',
@@ -101,6 +101,9 @@ module.exports = {
         mnemonic: "**SOME MNEMONIC**"
       },*/
     },
+    teams: {
+      url: 'https://sandbox.truffleteams.com/9c737c5a-60e2-4d1a-bf1c-a3466a631ebf'
+    }
   },
   solc: {
     version : "0.6.6",
