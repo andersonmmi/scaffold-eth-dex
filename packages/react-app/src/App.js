@@ -11,6 +11,7 @@ import  DEX from "./DEX.js"
 
 const mainnetProvider = new ethers.providers.InfuraProvider("mainnet","2717afb6bf164045b5d5468031b93f87")
 const localProvider = new ethers.providers.JsonRpcProvider(process.env.REACT_APP_PROVIDER?process.env.REACT_APP_PROVIDER:"http://localhost:8545")
+const teamsProvider = new ethers.providers.JsonRpcProvider("https://sandbox.truffleteams.com/9c737c5a-60e2-4d1a-bf1c-a3466a631ebf")
 
 function App() {
 
@@ -18,7 +19,8 @@ function App() {
   const [injectedProvider, setInjectedProvider] = useState();
   const price = useExchangePrice(mainnetProvider)
   const gasPrice = useGasPrice("fast")
-  const readContracts = useContractLoader(localProvider);
+  // const readContracts = useContractLoader(localProvider);
+  const readContracts = useContractLoader(teamsProvider);
 
   return (
     <div className="App">
@@ -27,7 +29,7 @@ function App() {
         <Account
           address={address}
           setAddress={setAddress}
-          localProvider={localProvider}
+          localProvider={teamsProvider}
           injectedProvider={injectedProvider}
           setInjectedProvider={setInjectedProvider}
           mainnetProvider={mainnetProvider}
@@ -45,7 +47,7 @@ function App() {
       <DEX
         address={address}
         injectedProvider={injectedProvider}
-        localProvider={localProvider}
+        localProvider={teamsProvider}
         mainnetProvider={mainnetProvider}
         readContracts={readContracts}
         price={price}
