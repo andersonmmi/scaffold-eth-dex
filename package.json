@@ -36,5 +36,9 @@
     "packages": [
       "packages/*"
     ]
+  },
+  "dependencies": {
+    "@harmony-js/core": "^0.1.54",
+    "dotenv": "^8.2.0"
   }
 }

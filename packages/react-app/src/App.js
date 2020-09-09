@@ -12,6 +12,7 @@ import  DEX from "./DEX.js"
 const mainnetProvider = new ethers.providers.InfuraProvider("mainnet","2717afb6bf164045b5d5468031b93f87")
 const localProvider = new ethers.providers.JsonRpcProvider(process.env.REACT_APP_PROVIDER?process.env.REACT_APP_PROVIDER:"http://localhost:8545")
 const teamsProvider = new ethers.providers.JsonRpcProvider("https://sandbox.truffleteams.com/9c737c5a-60e2-4d1a-bf1c-a3466a631ebf")
+const harmonyProvider = new ethers.providers.JsonRpcProvider("https://api.s0.p.hmny.io/")
 
 function App() {
 
@@ -20,7 +21,8 @@ function App() {
   const price = useExchangePrice(mainnetProvider)
   const gasPrice = useGasPrice("fast")
   // const readContracts = useContractLoader(localProvider);
-  const readContracts = useContractLoader(teamsProvider);
+  // const readContracts = useContractLoader(teamsProvider);
+  const readContracts = useContractLoader(harmonyProvider);
 
   return (
     <div className="App">
@@ -29,7 +31,7 @@ function App() {
         <Account
           address={address}
           setAddress={setAddress}
-          localProvider={teamsProvider}
+          localProvider={harmonyProvider}
           injectedProvider={injectedProvider}
           setInjectedProvider={setInjectedProvider}
           mainnetProvider={mainnetProvider}
@@ -47,7 +49,7 @@ function App() {
       <DEX
         address={address}
         injectedProvider={injectedProvider}
-        localProvider={teamsProvider}
+        localProvider={harmonyProvider}
         mainnetProvider={mainnetProvider}
         readContracts={readContracts}
         price={price}
@@ -83,7 +85,7 @@ function App() {
           </Col>
           <Col span={15}>
             <Faucet
-              localProvider={localProvider}
+              localProvider={harmonyProvider}
               dollarMultiplier={price}
             />
           </Col>

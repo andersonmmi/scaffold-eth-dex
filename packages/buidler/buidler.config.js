@@ -1,5 +1,13 @@
-const { usePlugin } = require('@nomiclabs/buidler/config')
+require('dotenv').config();
+const { TruffleProvider } = require('@harmony-js/core');
+const { usePlugin } = require('@nomiclabs/buidler/config');
 usePlugin("@nomiclabs/buidler-truffle5");
+
+const harmony_mnemonic = process.env.TESTNET_MNEMONIC
+const harmony_private_key = process.env.TESTNET_PRIVATE_KEY
+const harmony_url = process.env.TESTNET_0_URL
+const gasLimit = process.env.GAS_LIMIT
+const gasPrice = process.env.GAS_PRICE
 
 const DEBUG = true
 
@@ -92,7 +100,7 @@ async function addr(addr) {
 }
 
 module.exports = {
-  defaultNetwork: 'teams',
+  defaultNetwork: 'harmony',
   networks: {
     localhost: {
       //url: 'https://rinkeby.infura.io/v3/2717afb6bf164045b5d5468031b93f87',
@@ -103,7 +111,27 @@ module.exports = {
     },
     teams: {
       url: 'https://sandbox.truffleteams.com/9c737c5a-60e2-4d1a-bf1c-a3466a631ebf'
-    }
+    },
+    harmony: {
+      network_id: '2', // Any network (default: none)
+      provider: () => {
+        const truffleProvider = new TruffleProvider(
+          harmony_url,
+          { mnemonic: harmony_mnemonic },
+          { shardID: 0, chainId: 2 },
+          { gasLimit: gasLimit, gasPrice: gasPrice},
+        );
+        const newAcc = truffleProvider.addByPrivateKey(harmony_private_key);
+        truffleProvider.setSigner(newAcc);
+        return truffleProvider;
+      },
+    },
+    // harmony: {
+    //   url: harmony_url,
+    //   accounts: {
+    //     mnemonic: harmony_mnemonic
+    //   }
+    // }
   },
   solc: {
     version : "0.6.6",
